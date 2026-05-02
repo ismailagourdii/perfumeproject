@@ -1,0 +1,10 @@
+{
+  "name": "perfume-ai-project",
+  "private": true,
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "dev:lan": "cd frontend && npm run dev:lan",
+    "build": "cd frontend && npm run build",
+    "lint": "cd frontend && npm run lint"
+  }
+}

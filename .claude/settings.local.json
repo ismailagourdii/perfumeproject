@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat /Users/mac/perfume-ai-project/frontend/.env*)",
+      "Bash(find /Users/mac -iname *facture* -o -iname *invoice* -o -iname *receipt*)"
+    ]
+  }
+}

@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { spacing, typography } from '@/lib/design-tokens';
 import { useTranslation } from '@/lib/i18n';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 export interface PerfumeSelectionModalProps {
   isOpen: boolean;
@@ -97,7 +98,11 @@ export function PerfumeSelectionModal({
         >
           {filtered.map((perfume) => {
             const isSelected = perfume.id === selectedId;
-            const imageUrl = (perfume as { imageUrl?: string; image?: string }).imageUrl || (perfume as { imageUrl?: string; image?: string }).image || '';
+            const imageRaw =
+              (perfume as { imageUrl?: string; image?: string }).imageUrl ||
+              (perfume as { imageUrl?: string; image?: string }).image ||
+              '';
+            const imageUrl = imageRaw ? resolveMediaSrc(String(imageRaw)) : '';
             const notesPreview = [
               ...perfume.notesTop,
               ...perfume.notesHeart,

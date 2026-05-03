@@ -6,6 +6,7 @@ import { fetchSlides, trackSlideView, trackSlideClick } from '@/lib/api';
 import type { HeroSlide } from '@/lib/api';
 import { useLanguageStore } from '@/store/languageStore';
 import { useTranslation } from '@/lib/i18n';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 const HERO_IMAGE_URL = 'https://images.unsplash.com/photo-1541643600914-78b084683702?w=400&auto=format&fit=crop&q=80';
 
@@ -117,8 +118,11 @@ export function HeroCarousel() {
   };
   const showButton1 = !isPlaceholder(button1Text);
   const showButton2 = !isPlaceholder(button2Text);
-  const imageUrl = slide.image_url || HERO_IMAGE_URL;
-  const mobileImageUrl = slide.mobile_image_url || slide.image_url || HERO_IMAGE_URL;
+  const resolvedMain = slide.image_url ? resolveMediaSrc(slide.image_url) : '';
+  const mobileRaw = slide.mobile_image_url || slide.image_url;
+  const resolvedMobile = mobileRaw ? resolveMediaSrc(mobileRaw) : '';
+  const imageUrl = resolvedMain || HERO_IMAGE_URL;
+  const mobileImageUrl = resolvedMobile || imageUrl;
   const displayImageUrl = isMobile ? mobileImageUrl : imageUrl;
   const textColor = slide.text_color || '#ffffff';
   const overlayOpacity = (slide.overlay_opacity ?? 40) / 100;

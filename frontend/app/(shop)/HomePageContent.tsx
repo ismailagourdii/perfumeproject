@@ -9,6 +9,7 @@ import type { Perfume } from '@/types/shared-types';
 import { spacing, typography } from '@/lib/design-tokens';
 import { useTranslation } from '@/lib/i18n';
 import { useLanguageStore } from '@/store/languageStore';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 const CATEGORY_HOMME_IMG =
   'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=800&q=80';
@@ -28,14 +29,10 @@ interface HomeCollection {
   is_active: boolean;
 }
 
-const mediaBaseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000').replace(/\/api\/?$/, '');
-
 function resolveCollectionImage(key: string, image: string | null | undefined): string {
   const raw = String(image ?? '').trim();
   if (raw) {
-    if (raw.startsWith('http')) return raw;
-    if (raw.startsWith('/')) return `${mediaBaseUrl}${raw}`;
-    return `${mediaBaseUrl}/${raw}`;
+    return resolveMediaSrc(raw);
   }
   if (key.toLowerCase() === 'homme') return CATEGORY_HOMME_IMG;
   if (key.toLowerCase() === 'femme') return CATEGORY_FEMME_IMG;

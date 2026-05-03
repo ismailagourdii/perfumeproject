@@ -8,6 +8,7 @@ import { spacing } from '@/lib/design-tokens';
 import { useTranslation } from '@/lib/i18n';
 import { useLanguageStore } from '@/store/languageStore';
 import { NewsletterForm } from '@/components/shop/NewsletterForm';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 export interface FooterLink {
   label: string;
@@ -84,7 +85,8 @@ export function ShopFooter() {
   }, []);
 
   const description = settings?.footer_description || t('footer.description') || DEFAULT_FOOTER_DESCRIPTION;
-  const siteLogo = settings?.site_logo ?? null;
+  const siteLogoRaw = settings?.site_logo ?? null;
+  const siteLogo = siteLogoRaw ? resolveMediaSrc(String(siteLogoRaw)) : null;
   const col1Title = settings?.footer_col1_title ?? t('footer.company');
   const col1LinksBase = parseLinks(settings?.footer_col1_links).length ? parseLinks(settings?.footer_col1_links) : defaultCol1Links;
   const col1Links = [

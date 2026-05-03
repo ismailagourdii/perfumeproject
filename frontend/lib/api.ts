@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useAuthStore } from '@/store/authStore';
+import { getPublicApiBaseUrl } from '@/lib/media-url';
 import type {
   CartItem,
   City,
@@ -9,11 +10,8 @@ import type {
   User,
 } from '@/types/shared-types';
 
-const rawBase =
-  process.env.NEXT_PUBLIC_API_BASE_URL ||
-  process.env.NEXT_PUBLIC_API_URL ||
-  'http://localhost:8000';
-const baseURL = rawBase.replace(/\/api\/?$/, '') + '/api';
+const baseRoot = getPublicApiBaseUrl();
+const baseURL = `${baseRoot}/api`;
 const api = axios.create({
   baseURL,
   withCredentials: false,
@@ -254,7 +252,7 @@ export async function fetchPageBySlug(slug: string): Promise<{ page: PageFull }>
   return response.data;
 }
 
-// ——— Dashboard API (use NEXT_PUBLIC_API_URL=http://localhost:8000/api or leave default) ———
+// ——— Dashboard API : définir NEXT_PUBLIC_API_URL (ex. http://localhost:8000), sans suffixe /api ———
 
 export async function dashboardGet<T = unknown>(path: string): Promise<T> {
   // api instance already has baseURL ending with /api, so strip any /api prefix

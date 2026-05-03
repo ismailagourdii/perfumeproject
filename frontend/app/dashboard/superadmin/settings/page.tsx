@@ -5,6 +5,7 @@ import api, { API_SUPER_ADMIN } from '@/lib/api';
 import { spacing, typography } from '@/lib/design-tokens';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 interface SettingsData {
   packPricing: Record<string, number>;
@@ -417,7 +418,7 @@ export default function SuperadminSettingsPage() {
             </div>
             {site.collection_homme_image ? (
               <img
-                src={site.collection_homme_image}
+                src={resolveMediaSrc(site.collection_homme_image)}
                 alt=""
                 style={{ width: '100%', height: 120, objectFit: 'cover', borderRadius: 8 }}
               />
@@ -450,7 +451,7 @@ export default function SuperadminSettingsPage() {
             </div>
             {site.collection_femme_image ? (
               <img
-                src={site.collection_femme_image}
+                src={resolveMediaSrc(site.collection_femme_image)}
                 alt=""
                 style={{ width: '100%', height: 120, objectFit: 'cover', borderRadius: 8 }}
               />

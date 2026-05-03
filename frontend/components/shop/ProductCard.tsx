@@ -5,6 +5,7 @@ import type { Perfume, PerfumeSize, GenderCategory } from '@/types/shared-types'
 import { useCartStore } from '@/store/cartStore';
 import { useTranslation } from '@/lib/i18n';
 import { useLanguageStore } from '@/store/languageStore';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 export interface ProductCardProps {
   perfume: Perfume;
@@ -59,10 +60,11 @@ export function ProductCard({ perfume, size, showCart = true }: ProductCardProps
   const locale = useLanguageStore((s) => s.locale);
   const add = useCartStore((s) => s.add);
   const price = size === '20ml' ? perfume.price20ml : perfume.price50ml;
-  const imageUrl =
+  const imageRaw =
     (perfume as { imageUrl?: string; image?: string }).imageUrl ||
     (perfume as { imageUrl?: string; image?: string }).image ||
     '';
+  const imageUrl = imageRaw ? resolveMediaSrc(imageRaw) : '';
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();

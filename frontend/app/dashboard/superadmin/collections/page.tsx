@@ -6,6 +6,7 @@ import { spacing, typography } from '@/lib/design-tokens';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 type CollectionKey = 'homme' | 'femme' | 'mixte';
 
@@ -252,7 +253,7 @@ export default function SuperadminCollectionsPage() {
             >
               <div style={{ width: 120, height: 70, borderRadius: 8, overflow: 'hidden', backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
                 {item.image_url ? (
-                  <img src={item.image_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={resolveMediaSrc(item.image_url)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
                   <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-muted)', fontSize: 12 }}>—</div>
                 )}
@@ -360,7 +361,7 @@ export default function SuperadminCollectionsPage() {
             {form.image_url ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: spacing[3], padding: spacing[2], borderRadius: 12, border: '1px solid var(--color-border)', backgroundColor: 'var(--color-surface2)' }}>
                 <div style={{ width: 130, height: 76, borderRadius: 8, overflow: 'hidden', flexShrink: 0 }}>
-                  <img src={form.image_url} alt="Aperçu" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={resolveMediaSrc(form.image_url)} alt="Aperçu" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div style={{ flex: 1, minWidth: 0, fontSize: 12, color: 'var(--color-muted)', wordBreak: 'break-all' }}>{form.image_url}</div>
                 <Button size="sm" variant="ghost" onClick={() => setForm((p) => ({ ...p, image_url: '' }))}>Supprimer</Button>
@@ -434,7 +435,7 @@ export default function SuperadminCollectionsPage() {
                   }}
                 >
                   <div style={{ width: '100%', aspectRatio: '16/10', borderRadius: 8, overflow: 'hidden', backgroundColor: 'var(--color-surface)' }}>
-                    <img src={file.url} alt={file.filename} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={resolveMediaSrc(file.url)} alt={file.filename} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                   <div style={{ fontSize: 11, color: 'var(--color-muted)', marginTop: 6, wordBreak: 'break-word' }}>{file.filename}</div>
                 </button>

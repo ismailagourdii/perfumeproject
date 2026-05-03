@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import api from '@/lib/api';
 import { spacing, typography } from '@/lib/design-tokens';
 import { OrderStatusBadge } from '@/components/dashboard/OrderStatusBadge';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 function formatMAD(v: number | undefined | null) {
   return `${Number(v ?? 0).toLocaleString('fr-MA')} MAD`;
@@ -120,7 +121,7 @@ export default function UserOrderDetailPage() {
                   >
                     {!!item.imageUrl && (
                       <img
-                        src={String(item.imageUrl)}
+                        src={resolveMediaSrc(String(item.imageUrl))}
                         alt=""
                         style={{ width: 56, height: 56, borderRadius: 12, objectFit: 'cover' }}
                       />

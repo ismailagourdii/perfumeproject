@@ -9,6 +9,7 @@ import { useCartStore } from '@/store/cartStore';
 import { fetchCities, fetchShopSettings, createOrder } from '@/lib/api';
 import { useTranslation } from '@/lib/i18n';
 import type { City, PaymentMethodCode, ShopSettings } from '@/types/shared-types';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 export default function CartPage() {
   const router = useRouter();
@@ -82,7 +83,14 @@ export default function CartPage() {
               <p style={{ margin: 0, fontSize: 14, color: 'var(--color-text)' }}>{t('cart.empty')}</p>
             ) : (
               items.map((item) => {
-                const imageUrl = item.image ?? (item.kind === 'single' ? (item.perfume as { imageUrl?: string }).imageUrl : item.perfumes?.[0] ? (item.perfumes[0] as { imageUrl?: string }).imageUrl : '');
+                const imageRaw =
+                  item.image ??
+                  (item.kind === 'single'
+                    ? (item.perfume as { imageUrl?: string }).imageUrl
+                    : item.perfumes?.[0]
+                      ? (item.perfumes[0] as { imageUrl?: string }).imageUrl
+                      : '');
+                const imageUrl = imageRaw ? resolveMediaSrc(String(imageRaw)) : '';
                 const itemName = item.kind === 'single' ? item.perfume.name : (item.packType === 'duo' ? t('pack.duo') : t('pack.trio'));
                 return (
                   <div

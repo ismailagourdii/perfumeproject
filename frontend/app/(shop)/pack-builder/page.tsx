@@ -12,6 +12,7 @@ import { useCartStore } from '@/store/cartStore';
 import api, { fetchPerfumes } from '@/lib/api';
 import { useTranslation } from '@/lib/i18n';
 import type { PackType, PerfumeSize, Perfume } from '@/types/shared-types';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 export interface PackSettings {
   duo_20ml_price?: number;
@@ -195,9 +196,12 @@ export default function PackBuilderPage() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: spacing[3] }}>
                   {slots.map((slot) => {
                     const selectedProduct = slot.perfume;
-                    const imageUrl = selectedProduct
-                      ? (selectedProduct as { imageUrl?: string; image?: string }).imageUrl || (selectedProduct as { imageUrl?: string; image?: string }).image || ''
+                    const imageRaw = selectedProduct
+                      ? (selectedProduct as { imageUrl?: string; image?: string }).imageUrl ||
+                        (selectedProduct as { imageUrl?: string; image?: string }).image ||
+                        ''
                       : '';
+                    const imageUrl = imageRaw ? resolveMediaSrc(String(imageRaw)) : '';
                     const notesPreview = selectedProduct
                       ? [...selectedProduct.notesTop, ...selectedProduct.notesHeart, ...selectedProduct.notesBase].filter(Boolean).slice(0, 2).join(', ')
                       : '';

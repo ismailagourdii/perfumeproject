@@ -6,6 +6,7 @@ import { spacing, typography } from '@/lib/design-tokens';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 interface Banner {
   id: number;
@@ -245,7 +246,7 @@ export default function SuperadminBannersPage() {
               <span style={{ color: 'var(--color-muted)', fontSize: 18, cursor: 'grab', userSelect: 'none' }} aria-hidden>≡</span>
               <div style={{ width: 120, height: 60, borderRadius: 6, overflow: 'hidden', backgroundColor: 'var(--color-surface)', flexShrink: 0 }}>
                 {banner.image_url ? (
-                  <img src={String(banner.image_url)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={resolveMediaSrc(String(banner.image_url))} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
                   <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-muted)', fontSize: 12 }}>—</div>
                 )}
@@ -316,7 +317,7 @@ export default function SuperadminBannersPage() {
             {form.imagePreview ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: spacing[3], padding: spacing[2], borderRadius: 12, border: '1px solid var(--color-border)', backgroundColor: 'var(--color-surface2)' }}>
                 <div style={{ width: 160, height: 50, borderRadius: 8, overflow: 'hidden', flexShrink: 0 }}>
-                  <img src={form.imagePreview} alt="Aperçu" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={resolveMediaSrc(form.imagePreview)} alt="Aperçu" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div style={{ flex: 1, fontSize: 13, color: 'var(--color-text)' }}>{form.imageFile?.name ?? 'Image'}</div>
                 <button type="button" onClick={clearImagePreview} style={{ padding: '4px 8px', borderRadius: 8, border: 'none', backgroundColor: 'transparent', color: 'var(--color-error)', cursor: 'pointer', fontSize: 13 }}>× Supprimer</button>

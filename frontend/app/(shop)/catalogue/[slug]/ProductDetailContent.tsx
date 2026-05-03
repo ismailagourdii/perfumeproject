@@ -6,6 +6,7 @@ import { ProductCard } from '@/components/shop/ProductCard';
 import { spacing, typography } from '@/lib/design-tokens';
 import type { Perfume } from '@/types/shared-types';
 import { ProductDetailActions } from './ProductDetailActions';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 type PerfumeWithAr = Perfume & {
   name_ar?: string | null;
@@ -85,10 +86,11 @@ export function ProductDetailContent({
   const isRtl = useAr && hasAr;
   const labels = useAr && hasAr ? labelsAr : labelsFr;
 
-  const imageUrl =
+  const imageRaw =
     (perfume as { imageUrl?: string; image?: string }).imageUrl ||
     (perfume as { imageUrl?: string; image?: string }).image ||
     '';
+  const imageUrl = imageRaw ? resolveMediaSrc(String(imageRaw)) : '';
 
   return (
     <main

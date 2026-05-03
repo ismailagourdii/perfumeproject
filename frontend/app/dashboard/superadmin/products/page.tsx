@@ -7,6 +7,7 @@ import { spacing, typography } from '@/lib/design-tokens';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 function formatMAD(v: number | undefined | null) {
   return `${Number(v ?? 0).toLocaleString('fr-MA')} MAD`;
@@ -316,7 +317,7 @@ export default function SuperadminProductsPage() {
                 <td style={{ padding: `${spacing[2]}px 0` }}>
                   {p.imageUrl ? (
                     <img
-                      src={String(p.imageUrl)}
+                      src={resolveMediaSrc(String(p.imageUrl))}
                       alt=""
                       style={{ width: 40, height: 40, borderRadius: 8, objectFit: 'cover' }}
                     />
@@ -548,7 +549,7 @@ export default function SuperadminProductsPage() {
                   }}
                 >
                   <img
-                    src={form.imagePreview}
+                    src={resolveMediaSrc(form.imagePreview)}
                     alt="Aperçu"
                     style={{
                       width: 80,

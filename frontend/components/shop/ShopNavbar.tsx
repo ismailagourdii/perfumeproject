@@ -12,6 +12,7 @@ import api from '@/lib/api';
 import { fetchPages, type PagePublic } from '@/lib/api';
 import { useLanguageStore } from '@/store/languageStore';
 import { typography } from '@/lib/design-tokens';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 const NAV_LINKS = [
   { href: '/', labelKey: 'nav.home', exact: true },
@@ -60,7 +61,10 @@ export function ShopNavbar() {
   useEffect(() => {
     api
       .get<{ settings?: { site_logo?: string | null } }>('/settings/shop')
-      .then((res) => setSiteLogo(res.data?.settings?.site_logo ?? null))
+      .then((res) => {
+        const raw = res.data?.settings?.site_logo;
+        setSiteLogo(raw ? resolveMediaSrc(String(raw)) : null);
+      })
       .catch(() => setSiteLogo(null));
   }, []);
 

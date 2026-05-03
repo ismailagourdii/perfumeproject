@@ -10,6 +10,7 @@ import { LanguageToggle } from '@/components/ui/LanguageToggle';
 import { useAuthStore } from '@/store/authStore';
 import api, { API_SUPER_ADMIN, logout as apiLogout } from '@/lib/api';
 import { useTranslation } from '@/lib/i18n';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 const superadminNav = [
   { labelKey: 'dashboard.overview', href: '/dashboard/superadmin/overview' },
@@ -58,7 +59,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       .then((res) => {
         const flatLogo = (res.data?.settings as Record<string, unknown> | undefined)?.site_logo as string | null | undefined;
         const nestedLogo = res.data?.data?.site?.site_logo ?? null;
-        setSiteLogo((flatLogo ?? nestedLogo) || null);
+        const raw = (flatLogo ?? nestedLogo) || null;
+        setSiteLogo(raw ? resolveMediaSrc(String(raw)) : null);
       })
       .catch(() => {
         setSiteLogo(null);

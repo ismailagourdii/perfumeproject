@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import api, { API_SUPER_ADMIN } from '@/lib/api';
 import { spacing, typography } from '@/lib/design-tokens';
 import { Button } from '@/components/ui/Button';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 interface MediaFile {
   filename: string;
@@ -189,7 +190,7 @@ export default function SuperadminMediaPage() {
             >
               <div style={{ aspectRatio: '1', backgroundColor: 'var(--color-surface)', position: 'relative' }}>
                 <img
-                  src={file.url}
+                  src={resolveMediaSrc(file.url)}
                   alt=""
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                 />
@@ -200,7 +201,7 @@ export default function SuperadminMediaPage() {
                 </div>
                 <div style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 4 }}>{formatSize(file.size)}</div>
                 <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-                  <Button size="sm" variant="secondary" onClick={() => copyUrl(file.url)}>
+                  <Button size="sm" variant="secondary" onClick={() => copyUrl(resolveMediaSrc(file.url))}>
                     Copier URL
                   </Button>
                   {deleteConfirm === file.filename ? (

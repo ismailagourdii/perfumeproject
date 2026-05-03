@@ -8,6 +8,7 @@ import { spacing, typography } from '@/lib/design-tokens';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 type PageRow = PageFull;
 
@@ -128,8 +129,9 @@ export default function SuperadminPagesPage() {
 
   function insertImage() {
     const url = window.prompt('URL de l\'image :');
-    if (url == null) return;
-    insertAtCursor(`<img src="${url.replace(/"/g, '&quot;')}" alt="" />`);
+    if (url == null || !String(url).trim()) return;
+    const resolved = resolveMediaSrc(String(url).trim());
+    insertAtCursor(`<img src="${resolved.replace(/"/g, '&quot;')}" alt="" />`);
   }
 
   function handleTitleChange(title: string) {

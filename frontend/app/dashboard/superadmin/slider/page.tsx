@@ -6,6 +6,7 @@ import { spacing, typography } from '@/lib/design-tokens';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
+import { resolveMediaSrc } from '@/lib/media-url';
 
 interface Slide {
   id: number;
@@ -420,7 +421,7 @@ export default function SuperadminSliderPage() {
               <span style={{ fontSize: 12, color: 'var(--color-muted)', minWidth: 48, flexShrink: 0 }}>#{index + 1}</span>
               <div style={{ width: 64, height: 48, borderRadius: 8, overflow: 'hidden', backgroundColor: 'var(--color-surface)', flexShrink: 0 }}>
                 {slide.image_url ? (
-                  <img src={String(slide.image_url)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={resolveMediaSrc(String(slide.image_url))} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
                   <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-muted)', fontSize: 12 }}>—</div>
                 )}
@@ -545,7 +546,7 @@ export default function SuperadminSliderPage() {
             <input ref={fileInputRef} type="file" accept="image/*" onChange={onImageChange} style={{ position: 'absolute', width: 1, height: 1, opacity: 0, overflow: 'hidden', clip: 'rect(0,0,0,0)', pointerEvents: 'none' }} aria-hidden />
             {form.imagePreview ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: spacing[3], padding: spacing[2], borderRadius: 12, border: '1px solid var(--color-border)', backgroundColor: 'var(--color-surface2)' }}>
-                <img src={form.imagePreview} alt="Aperçu" style={{ width: 80, height: 60, objectFit: 'cover', borderRadius: 8 }} />
+                <img src={resolveMediaSrc(form.imagePreview)} alt="Aperçu" style={{ width: 80, height: 60, objectFit: 'cover', borderRadius: 8 }} />
                 <div style={{ flex: 1, fontSize: 13, color: 'var(--color-text)' }}>{form.imageFile?.name ?? 'Image'}</div>
                 <button type="button" onClick={clearImagePreview} style={{ padding: '4px 8px', borderRadius: 8, border: 'none', backgroundColor: 'transparent', color: 'var(--color-error)', cursor: 'pointer', fontSize: 13 }}>× Supprimer</button>
               </div>
@@ -578,7 +579,7 @@ export default function SuperadminSliderPage() {
             <input ref={mobileFileInputRef} type="file" accept="image/*" onChange={onMobileImageChange} style={{ position: 'absolute', width: 1, height: 1, opacity: 0, overflow: 'hidden', clip: 'rect(0,0,0,0)', pointerEvents: 'none' }} aria-hidden />
             {form.mobileImagePreview ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: spacing[3], padding: spacing[2], borderRadius: 12, border: '1px solid var(--color-border)', backgroundColor: 'var(--color-surface2)' }}>
-                <img src={form.mobileImagePreview} alt="Aperçu mobile" style={{ width: 80, height: 60, objectFit: 'cover', borderRadius: 8 }} />
+                <img src={resolveMediaSrc(form.mobileImagePreview)} alt="Aperçu mobile" style={{ width: 80, height: 60, objectFit: 'cover', borderRadius: 8 }} />
                 <div style={{ flex: 1, fontSize: 13, color: 'var(--color-text)' }}>{form.mobileImageFile?.name ?? 'Image mobile'}</div>
                 <button type="button" onClick={clearMobileImagePreview} style={{ padding: '4px 8px', borderRadius: 8, border: 'none', backgroundColor: 'transparent', color: 'var(--color-error)', cursor: 'pointer', fontSize: 13 }}>× Supprimer</button>
               </div>
